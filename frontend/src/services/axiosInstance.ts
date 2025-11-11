@@ -1,16 +1,16 @@
 //* 全域 Axios 設定與攔截器邏輯，在 request 攔截器中自動附上 access token，在 response 攔截器中自動 refresh token
 //* 可視為「應用層安全邏輯」。
+//* 上線後端還是要部在render，因為serverless function沒辦法持久化記憶體，也就是無法真的註冊
 
 import axios from "axios";
 import type { AppStore } from "@/stores/store";
 import { setCredentials, logOut } from "@/stores/features/authSlice";
 
-// const baseURL = import.meta.env.VITE_API_URL || "http://localhost:4000"; // for backend nodejs used
-// for serverless used
-const baseURL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:3000/api" // for vercel dev
-    : "/api"; // in production
+const baseURL = "http://localhost:4000"; // for backend nodejs used
+// const baseURL =
+//   import.meta.env.MODE === "development"
+//     ? "http://localhost:3000/api" // for vercel dev
+//     : "/api"; // in serverless production
 
 export const axiosInstance = axios.create({
   baseURL,

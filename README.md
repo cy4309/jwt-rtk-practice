@@ -84,3 +84,18 @@ isError 是否錯誤
 ### 生成 Access Token Secret & Refresh Token Secret
 
 node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+
+---
+
+## ⚠️ Serverless 限制說明
+
+在本專案的 Serverless API（Vercel Functions）架構中，請注意以下限制：
+
+- Vercel 的 Serverless Function 屬於「無狀態」執行環境（stateless execution）。
+- 每一次 API 請求都會啟動一個全新的執行實例，並在回傳後立即銷毀。
+- 這代表在程式內以 `let users = []` 或 `const users = [...]` 等方式儲存資料，只能在單次請求中使用。
+- 一旦請求結束，這些記憶體資料就會消失，無法在下次請求中保留（包括註冊後的使用者資訊）。
+  因此：
+- ✅ 本專案可以正常練習 JWT Token 驗證、Access/Refresh Token 流程。
+- ⚠️ 但 **註冊帳號（/api/register）不會持久化保存**，登入僅能使用預設的 `testuser`。
+- 若需實作真實的註冊 / 登入系統，請改用 **後端常駐服務（如 Render、Railway、VPS 等）** 搭配 **資料庫（MongoDB / PostgreSQL / Supabase / Neon 等）** 進行資料儲存。
