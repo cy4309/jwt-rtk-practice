@@ -3,6 +3,16 @@
 專案目標是實作一套完整、安全的 Access Token + Refresh Token 登入機制，
 同時使用 Redux Toolkit + RTK Query 管理前端狀態與 API。
 
+支援兩種部署方式：
+✅ Serverless API 模式（Vercel Functions） → for vercel deploy used
+🧩 Backend Server 模式（Express） → 適合日後擴展成大型應用，可供 Render / Railway 長駐伺服器，擴充性強
+
+---
+
+🚀 啟動本地開發（Vercel 模擬模式）
+npm install -g vercel
+vercel dev
+
 ---
 
 🚀 Features
@@ -59,5 +69,3 @@ isError 是否錯誤
 # 生成 Access Token Secret & Refresh Token Secret
 
 node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-
----
