@@ -98,4 +98,7 @@ app.post("/logout", (req, res) => {
   res.json({ message: "Logged out successfully" });
 });
 
+// 預熱render
+app.get("/health", (req, res) => res.send("OK"));
+
 app.listen(4000, () => console.log("Backend running on port 4000"));

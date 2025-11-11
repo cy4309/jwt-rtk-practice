@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation, useRegisterMutation } from "@/services/authApi";
 import { useDispatch } from "react-redux";
@@ -9,15 +9,24 @@ export default function Auth() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [serverWake, setServerWake] = useState(false);
 
   const [login, { isLoading: loggingIn }] = useLoginMutation();
   const [register, { isLoading: registering }] = useRegisterMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // 預熱render
+  useEffect(() => {
+    fetch("https://jwt-rtk-practice-backend.onrender.com/health").catch(
+      () => {}
+    );
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
+    setServerWake(true);
 
     if (!username || !password) {
       setMessage("請輸入帳號與密碼");
@@ -43,6 +52,9 @@ export default function Auth() {
       setMessage(
         err?.data?.message || `${mode === "login" ? "登入" : "註冊"}失敗`
       );
+    } finally {
+      // setServerWake(false);
+      setTimeout(() => setServerWake(false), 3000);
     }
   };
 
@@ -106,6 +118,13 @@ export default function Auth() {
               ? "註冊中..."
               : "註冊"}
           </button>
+
+          {/* ✅ 額外提示區塊 */}
+          {serverWake && (loggingIn || registering) && (
+            <p className="text-center text-sm text-gray-500 mt-2 animate-pulse">
+              ☁️ 伺服器啟動中，請稍候...
+            </p>
+          )}
 
           {message && (
             <p
