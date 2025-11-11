@@ -5,7 +5,8 @@ import axios from "axios";
 import type { AppStore } from "@/stores/store";
 import { setCredentials, logOut } from "@/stores/features/authSlice";
 
-const baseURL = import.meta.env.VITE_API_URL || "http://localhost:4000";
+// const baseURL = import.meta.env.VITE_API_URL || "http://localhost:4000"; // for backend nodejs used
+const baseURL = "/api"; // for serverless used
 
 export const axiosInstance = axios.create({
   baseURL,

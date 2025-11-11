@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^24.10.0",
+    "@vercel/node": "^5.5.5",
+    "typescript": "^5.9.3"
+  }
+}
