@@ -6,7 +6,11 @@ import axios from "axios";
 import type { AppStore } from "@/stores/store";
 import { setCredentials, logOut } from "@/stores/features/authSlice";
 
-const baseURL = "http://localhost:4000"; // for backend nodejs used
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:4000"
+    : "https://jwt-rtk-practice-backend.onrender.com";
+
 // const baseURL =
 //   import.meta.env.MODE === "development"
 //     ? "http://localhost:3000/api" // for vercel dev
