@@ -76,14 +76,14 @@ export default function Auth() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
-            placeholder="帳號:admin"
+            placeholder="帳號"
             className="border p-2 rounded focus:ring-2 focus:ring-blue-400 outline-none"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"
-            placeholder="密碼:admin"
+            placeholder="密碼"
             className="border p-2 rounded focus:ring-2 focus:ring-blue-400 outline-none"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
