@@ -6,7 +6,11 @@ import type { AppStore } from "@/stores/store";
 import { setCredentials, logOut } from "@/stores/features/authSlice";
 
 // const baseURL = import.meta.env.VITE_API_URL || "http://localhost:4000"; // for backend nodejs used
-const baseURL = "/api"; // for serverless used
+// for serverless used
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:3000/api" // for vercel dev
+    : "/api"; // in production
 
 export const axiosInstance = axios.create({
   baseURL,
