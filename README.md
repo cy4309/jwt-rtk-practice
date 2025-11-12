@@ -8,20 +8,26 @@
 
 ## ⚙️ 支援兩種部署方式
 
-✅ **Serverless API 模式（Vercel Functions）**  
-　 → 用於 Vercel Deploy，免伺服器、免 CORS，自動擴展。
+✅ 🧱 Backend Server 模式（Express + Docker + Nginx）
+→ 適合實際開發與部署，可透過 Docker Compose 一次啟動前端、後端與反向代理。
+→ Nginx 提供單一入口（port 8081），整合 /api 反代，完全無 CORS 問題。
 
-🧩 **Backend Server 模式（Express）**  
-　 → 適合日後擴展成大型應用，可供 Render / Railway 長駐伺服器，擴充性強。
+🧩 Serverless API 模式（Vercel Functions）
+→ 用於 Vercel Deploy，免伺服器、免維運，但不支援資料持久化（stateless）。
 
 ---
 
-## 🚀 啟動本地開發（Vercel 模擬模式）
+## 🚀 啟動本地開發（Docker + Nginx 模式）
 
 ```bash
-npm install -g vercel
-vercel dev
+# 第一次啟動（建議加上 --build 確保更新）
+docker compose up --build
+# 或一般啟動（後續使用）
+docker compose up
 ```
+
+🧭 啟動後訪問：
+前端 + Nginx 單一入口： http://localhost:8081
 
 ---
 

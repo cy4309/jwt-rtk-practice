@@ -2,14 +2,21 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config();
+// ✅ 取得目前檔案的目錄（因為你在 ESModule 環境）
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// dotenv.config();
+dotenv.config({ path: path.join(__dirname, "../.env") }); // ✅ 指定載入根目錄的 .env
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://jwt-rtk-practice-frontend.vercel.app"],
+    origin: ["http://localhost:5173", "http://localhost:8081", "https://jwt-rtk-practice-frontend.vercel.app"],
     credentials: true,
   })
 );
@@ -101,4 +108,4 @@ app.post("/logout", (req, res) => {
 // 預熱render
 app.get("/health", (req, res) => res.send("OK"));
 
-app.listen(4000, () => console.log("Backend running on port 4000"));
+app.listen(5000, "0.0.0.0", () => console.log("Backend running on port 5000"));

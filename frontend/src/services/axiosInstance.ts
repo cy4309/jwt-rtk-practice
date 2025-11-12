@@ -7,8 +7,8 @@ import type { AppStore } from "@/stores/store";
 import { setCredentials, logOut } from "@/stores/features/authSlice";
 
 const baseURL =
-  import.meta.env.MODE === "development"
-    ? "http://localhost:4000"
+  import.meta.env.VITE_APP_ENV === "docker" || import.meta.env.DEV
+    ? "/api"
     : "https://jwt-rtk-practice-backend.onrender.com";
 
 // const baseURL =

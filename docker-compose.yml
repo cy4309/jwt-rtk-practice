@@ -1,0 +1,32 @@
+services:
+  backend:
+    build: ./backend
+    container_name: jwt-backend
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    expose:
+      - "5000" # 只暴露給內部網路，不對外開 port
+
+  frontend:
+    build:
+      context: .                # ✅ 根目錄為 context
+      dockerfile: ./frontend/Dockerfile
+      args:
+        - VITE_APP_ENV=docker
+        - VITE_API_URL=/api
+        - VITE_API_URL_PROD=https://jwt-rtk-practice-backend.onrender.com
+    expose:
+      - "80"
+    depends_on:
+      - backend
+
+  nginx:
+    build: ./nginx
+    container_name: jwt-nginx
+    restart: unless-stopped
+    ports:
+      - "8081:80" # ✅ 唯一對外入口
+    depends_on:
+      - frontend
+      - backend

@@ -16,11 +16,14 @@ export default function Auth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const baseURL =
+    import.meta.env.VITE_APP_ENV === "docker" || import.meta.env.DEV
+      ? "/api"
+      : "https://jwt-rtk-practice-backend.onrender.com";
+
   // 預熱render
   useEffect(() => {
-    fetch("https://jwt-rtk-practice-backend.onrender.com/health").catch(
-      () => {}
-    );
+    fetch(`${baseURL}/health`).catch(() => {});
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
