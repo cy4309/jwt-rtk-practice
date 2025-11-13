@@ -4,17 +4,10 @@
 
 import axios from "axios";
 import type { AppStore } from "@/stores/store";
-import { setCredentials, logOut } from "@/stores/features/authSlice";
+import { setCredentials, logOut } from "@/stores/features/rtkQuery/authSlice";
+import { getBaseURL } from "@/utils/getBaseURL";
 
-const baseURL =
-  import.meta.env.VITE_APP_ENV === "docker" || import.meta.env.DEV
-    ? "/api"
-    : "https://jwt-rtk-practice-backend.onrender.com";
-
-// const baseURL =
-//   import.meta.env.MODE === "development"
-//     ? "http://localhost:3000/api" // for vercel dev
-//     : "/api"; // in serverless production
+const baseURL = getBaseURL();
 
 export const axiosInstance = axios.create({
   baseURL,

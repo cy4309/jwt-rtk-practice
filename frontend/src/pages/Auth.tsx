@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation, useRegisterMutation } from "@/services/authApi";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "@/services/rtkQuery/authApi";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "@/stores/features/authSlice";
+import { setCredentials } from "@/stores/features/rtkQuery/authSlice";
+import { getBaseURL } from "@/utils/getBaseURL";
 
 export default function Auth() {
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -15,11 +19,7 @@ export default function Auth() {
   const [register, { isLoading: registering }] = useRegisterMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const baseURL =
-    import.meta.env.VITE_APP_ENV === "docker" || import.meta.env.DEV
-      ? "/api"
-      : "https://jwt-rtk-practice-backend.onrender.com";
+  const baseURL = getBaseURL();
 
   // 預熱render
   useEffect(() => {

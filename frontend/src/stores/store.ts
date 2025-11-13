@@ -2,8 +2,8 @@
 //* 負責將 Redux 與 axios 連動起來。
 
 import { configureStore } from "@reduxjs/toolkit";
-import { api, setupAxiosInterceptors } from "@/services/api";
-import authReducer from "@/stores/features/authSlice";
+import { api, setupAxiosInterceptors } from "@/services/rtkQuery/api";
+import authReducer from "@/stores/features/rtkQuery/authSlice";
 import themeReducer from "@/stores/features/themeSlice";
 
 export const setupStore = () =>

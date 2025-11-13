@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/stores/store";
-import { logOut } from "@/stores/features/authSlice";
-import { useLogoutMutation } from "@/services/authApi";
+import { logOut } from "@/stores/features/rtkQuery/authSlice";
+import { useLogoutMutation } from "@/services/rtkQuery/authApi";
 import { useNavigate } from "react-router-dom";
 import ThemeButton from "@/components/ThemeButton";
 import BaseButton from "@/components/BaseButton";
