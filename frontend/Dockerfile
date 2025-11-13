@@ -9,8 +9,8 @@ RUN npm install
 COPY ./frontend .
 
 # ✅ 環境變數注入
-# ARG VITE_APP_ENV
-# ENV VITE_APP_ENV=$VITE_APP_ENV
+ARG VITE_APP_ENV
+ENV VITE_APP_ENV=$VITE_APP_ENV
 
 RUN npm run build
 

@@ -1,7 +1,7 @@
 export const getBaseURL = () => {
   // ✅ 如果跑在 Docker / Nginx (port 8081)
   // if (window.location.port === "8081") {
-  if (import.meta.env.VITE_APP_ENV === "docker" || import.meta.env.DEV) {
+  if (import.meta.env.VITE_APP_ENV === "docker") {
     return "/api"; // → Nginx 會自動 proxy 到 backend:5000
   }
   // ✅ 如果是本地開發模式 (Vite 5173)
