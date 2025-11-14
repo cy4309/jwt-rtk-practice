@@ -4,9 +4,11 @@ import {
   useLoginMutation,
   useRegisterMutation,
 } from "@/services/rtkQuery/authApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "@/stores/features/rtkQuery/authSlice";
 import { getBaseURL } from "@/utils/getBaseURL";
+import { RootState } from "@/stores/store";
+import { toggleAuthMode } from "@/stores/features/authModeSlice";
 
 export default function Auth() {
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -20,6 +22,7 @@ export default function Auth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const baseURL = getBaseURL();
+  const rtkMode = useSelector((s: RootState) => s.authMode.mode);
 
   // 預熱render
   useEffect(() => {
@@ -67,6 +70,15 @@ export default function Auth() {
         {/* tab switch */}
         <div className="flex mb-6 border-b border-gray-200">
           <button
+            type="button"
+            onClick={() => dispatch(toggleAuthMode())}
+            className="absolute top-4 right-4 text-xs px-4 py-2 rounded-lg bg-white border border-black"
+          >
+            切換登入模式（目前：{rtkMode}）
+          </button>
+
+          <button
+            type="button"
             className={`flex-1 py-2 text-center font-semibold ${
               mode === "login"
                 ? "border-b-2 border-blue-500 text-blue-600"
@@ -77,6 +89,7 @@ export default function Auth() {
             登入
           </button>
           <button
+            type="button"
             className={`flex-1 py-2 text-center font-semibold ${
               mode === "register"
                 ? "border-b-2 border-green-500 text-green-600"

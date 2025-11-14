@@ -21,7 +21,8 @@ let store: AppStore;
 axiosInstance.interceptors.request.use(
   (config) => {
     const state = store?.getState();
-    const token = state?.auth?.accessToken;
+    // const token = state?.auth?.accessToken;
+    const token = state?.authQuery?.accessToken;
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
@@ -58,7 +59,7 @@ axiosInstance.interceptors.response.use(
         // 更新 Redux 狀態
         store.dispatch(
           setCredentials({
-            user: store.getState().auth.user!,
+            user: store.getState().authQuery.user!,
             accessToken: newAccessToken,
           })
         );

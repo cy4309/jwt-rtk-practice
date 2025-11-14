@@ -10,7 +10,12 @@ export default function ProtectedRoute({
 }: {
   children: JSX.Element;
 }) {
-  const token = useSelector((state: RootState) => state.auth.accessToken);
+  // const token = useSelector((state: RootState) => state.auth.accessToken);
+  const queryToken = useSelector((s: RootState) => s.authQuery.accessToken);
+  const thunkToken = useSelector((s: RootState) => s.authThunk.accessToken);
+
+  const token = queryToken || thunkToken;
+
   console.log(
     "🧩 [STEP 4] ProtectedRoute 檢查 token:",
     token ? "存在 ✅" : "不存在 ❌"

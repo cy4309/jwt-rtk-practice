@@ -1,13 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/stores/store";
-import { logOut } from "@/stores/features/rtkQuery/authSlice";
+// import { logOut } from "@/stores/features/rtkQuery/authSlice";
 import { useLogoutMutation } from "@/services/rtkQuery/authApi";
 import { useNavigate } from "react-router-dom";
 import ThemeButton from "@/components/ThemeButton";
 import BaseButton from "@/components/BaseButton";
+import { clearAuth } from "@/stores/features/rtkAsyncThunk/authSlice";
+import { logOut as logOutQuery } from "@/stores/features/rtkQuery/authSlice";
 
 const BaseLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const user = useSelector((state: RootState) => state.auth.user);
+  // const user = useSelector((state: RootState) => state.auth.user);
+  const queryUser = useSelector((s: RootState) => s.authQuery.user);
+  const thunkUser = useSelector((s: RootState) => s.authThunk.user);
   const [logoutApi] = useLogoutMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,16 +25,19 @@ const BaseLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       console.error("❌ [STEP 6] 登出 API 失敗:", err);
       console.error("Logout failed:", err);
     } finally {
-      dispatch(logOut());
+      dispatch(clearAuth());
+      dispatch(logOutQuery());
       console.log("💾 [STEP 6] Redux 已清除登入資訊");
-      navigate("/login");
+      navigate("/auth");
     }
   };
 
   return (
     <div className="p-4 w-full min-h-[100dvh] flex flex-col bg-secondary dark:bg-primary text-primary dark:text-secondary">
       <header className="p-4 shadow flex justify-between items-center rounded-lg">
-        <h1 className="text-xl font-bold">歡迎，{user?.username}</h1>
+        <h1 className="text-xl font-bold">
+          歡迎，{queryUser?.username || thunkUser?.username}
+        </h1>
         <div className="flex justify-center items-center space-x-4">
           <ThemeButton />
           <BaseButton
