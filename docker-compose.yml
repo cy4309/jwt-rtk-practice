@@ -12,8 +12,8 @@ services:
     build:
       context: .                # ✅ 根目錄為 context
       dockerfile: ./frontend/Dockerfile
-      # args:
-      #   - VITE_APP_ENV=docker
+      args:
+        - VITE_APP_ENV=docker # 這裡要注入，不然docker compose up會吃不到env
       #   - VITE_API_URL=/api
       #   - VITE_API_URL_PROD=https://jwt-rtk-practice-backend.onrender.com
     container_name: jwt-frontend
